@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+ xmlns:spring="http://www.springframework.org/schema/beans" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration1" host="0.0.0.0" port="8485" doc:name="HTTP Listener Configuration"/>
+   
+   
+   <configuration doc:name="Configuration">
+     <expression-language autoResolveVariables="true">
+         <import class="org.mule.util.StringUtils" />
+     </expression-language>
+ </configuration>
+   
+   
+    <flow name="testFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration1" path="/test/" doc:name="HTTP" allowedMethods="POST,GET"/>
+        <set-variable variableName="ProfileId" value="KApohA6Qmy+4NdVDgKHtlQ==" doc:name="Variable"/>
+        <set-variable variableName="accessToken" value="fvu2e55ey9spgz5d" doc:name="Variable"/>
+        <set-payload value="#[flowVars.ProfileId],#[flowVars.accessToken]" doc:name="Set Payload"/>
+        <logger message="Contactednated :-#[payload]" level="INFO" doc:name="Logger"/>
+        <expression-transformer expression="#[StringUtils.split(message.payload, ',')]" doc:name="Expression"/>
+
+       <!--  <splitter expression="#[StringUtils.split(message.payload, ',')]" doc:name="Splitter"/> -->    
+    <logger message="ProfileId--:--#[message.payload[0]], accessToken--:--#[payload[1]]" level="INFO" doc:name="Logger"/>
+        
+    </flow>
+</mule>
