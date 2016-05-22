@@ -20,6 +20,7 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
     <flow name="testFlow">
         <http:listener config-ref="HTTP_Listener_Configuration1" path="/test/" doc:name="HTTP" allowedMethods="POST,GET"/>
         <set-variable variableName="ProfileId" value="KApohA6Qmy+4NdVDgKHtlQ==" doc:name="Variable"/>
+        <logger message="git" level="INFO" doc:name="Logger"/>
         <set-variable variableName="accessToken" value="fvu2e55ey9spgz5d" doc:name="Variable"/>
         <set-payload value="#[flowVars.ProfileId],#[flowVars.accessToken]" doc:name="Set Payload"/>
         <logger message="Contactednated :-#[payload]" level="INFO" doc:name="Logger"/>
